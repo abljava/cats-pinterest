@@ -1,15 +1,25 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <header className='bg-[#2196F3] px-16 flex items-center'>
+    <header className="bg-[#2196F3] px-[62px] flex items-center shadow-[0_4px_4px_0_rgba(0,0,0,0.3)]">
       <nav>
-        <ul className='flex gap-4'>
-          <li >
-            <Link to='/' className='text-white p-6 hover:bg-[#1E88E5] hover:text-white/[.7] cursor-pointer'>Все котики</Link>
+        <ul className="flex">
+          <li className="flex">
+            <Link
+              to="/"
+              className="text-white/[.7] tracking-wide px-[25px] py-[21px] hover:bg-[#1E88E5] hover:text-white cursor-pointer transition-all"
+            >
+              Все котики
+            </Link>
           </li>
-          <li className='text-white p-6 hover:bg-[#1E88E5] hover:text-white/[.7] cursor-pointer '>
-            <Link to='/favourites'>Любимые котики</Link>
+          <li className="flex">
+            <Link
+              to="/favourites"
+              className="text-white/[.7] tracking-wide px-[25px] py-[21px] p-7 hover:bg-[#1E88E5] hover:text-white cursor-pointer transition-all"
+            >
+              Любимые котики
+            </Link>
           </li>
         </ul>
       </nav>

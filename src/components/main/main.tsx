@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import CardList from '../cardlist/cardlist';
-import getCards from '../../api/api';
-import { setCards } from '../../slices/cardSlice';
-import { Card } from '../../types/Card';
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CardList from "../cardlist/cardlist";
+import getCards from "../../api/api";
+import { setCards } from "../../slices/cardSlice";
+import { Card } from "../../types/Card";
 
 function Main() {
   const dispatch = useDispatch();
+  const cards = useSelector(
+    (state: { cards: { cards: Card[] } }) => state.cards.cards
+  );
 
   const loadCards = () => {
     getCards().then((cards: Card[]) => {
@@ -14,14 +17,19 @@ function Main() {
     });
   };
 
+
+
   useEffect(() => {
-    loadCards();
-  }, []);
+    if (!cards.length) {
+      loadCards();
+    }
+  }, [cards]);
+
 
   return (
-    <main className='px-16 py-12 flex flex-col'>
+    <main className="px-[62px] pt-[52px] pb-12 flex flex-col">
       <CardList />
-      <button onClick={() => loadCards()} >... загружаем еще котиков ...</button>
+      <button onClick={() => loadCards()}>... загружаем еще котиков ...</button>
     </main>
   );
 }

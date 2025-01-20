@@ -8,7 +8,7 @@ function CardList() {
 
   return (
     <section className='mb-[50px]'>
-      <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-12'>
+      <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-[48px]'>
         {cards.map((item: Card) => {
           return (
             <li

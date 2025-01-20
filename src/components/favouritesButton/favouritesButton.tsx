@@ -14,7 +14,7 @@ function FavouritesButton({ card }: { card: Card }) {
   return (
     <button
       onClick={() => handleClick(card)}
-      className={`h-10 w-10 absolute ${
+      className={`h-10 w-10 absolute transition-all ${
         isLiked ? 'bg-[url("/heart-clicked.svg")]' : 'bg-[url("/heart.svg")]'
       } bg-contain bg-no-repeat hover:bg-[url("/heart-hovered.svg")] bottom-[28px] right-[21px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 `}
     />
