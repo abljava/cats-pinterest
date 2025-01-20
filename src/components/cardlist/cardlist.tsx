@@ -1,29 +1,59 @@
-import { useSelector } from 'react-redux';
-import FavouritesButton from '../favouritesButton/favouritesButton';
-import { Card } from '../../types/Card';
+import { useEffect, createRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Card } from "../../types/Card";
+import CardItem from "../CardItem/CardItem";
+import getCards from "../../api/api";
+import { setCards } from "../../slices/cardSlice";
 
 function CardList() {
+  const dispatch = useDispatch();
+  const cards = useSelector(
+    (state: { cards: { cards: Card[] } }) => state.cards.cards
+  );
+  const lastCard = createRef<HTMLLIElement>();
 
-  const cards = useSelector((state: { cards: { cards: Card[] } }) => state.cards.cards);
+  const loadCards = () => {
+    getCards().then((cards: Card[]) => {
+      dispatch(setCards(cards));
+    });
+  };
+
+    useEffect(() => {
+    if (!cards.length) {
+      loadCards();
+    }
+  }, [cards]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadCards(); // Загружаем карточки, когда элемент виден
+      }
+    });
+
+    if (lastCard.current) {
+      observer.observe(lastCard.current); // Начинаем наблюдение за элементом
+    }
+
+    return () => {
+      if (lastCard.current) {
+        observer.unobserve(lastCard.current); // Отключаем наблюдение при размонтировании
+      }
+    };
+  }, [lastCard]);
 
   return (
-    <section className='mb-[50px]'>
-      <ul className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-[48px]'>
-        {cards.map((item: Card) => {
+    <section className="mb-[50px]">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-[48px]">
+        {cards.map((item: Card, index: number) => {
           return (
-            <li
-              key={item.id}
-              className='h-[225px] w-[225px] relative transition-transform duration-300 hover:scale-110 hover:shadow-[0_6px_8px_0_rgba(0,0,0,0.5)] group'
-            >
-              <div className=''>
-                <FavouritesButton card={item} />
-              </div>
-              <img
-                src={item.url}
-                alt={item.id}
-                className='h-full w-full object-cover'
-              />
-            </li>
+            <>
+              {index + 1 === cards.length ? (
+                <CardItem item={item} ref={lastCard} />
+              ) : (
+                <CardItem item={item} />
+              )}
+            </>
           );
         })}
       </ul>
