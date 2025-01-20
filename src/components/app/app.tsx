@@ -1,19 +1,15 @@
-import { useLocation } from 'react-router-dom';
-import { Route, Routes } from 'react-router-dom';
-import Header from "../header/header";
-import Main from "../main/main";
-import Favourites from "../favourites/favourites";
+import { Route, Routes } from "react-router-dom";
+import Header from "../Header/Header";
+import Favourites from "../Favourites/Favourites";
+import CardList from "../Cardlist/Cardlist";
 
 function App() {
-  // const location = useLocation()
-  // console.log(location.pathname);
-
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/favourites" element={<Favourites/>} />
+        <Route path="/" element={<CardList />} />
+        <Route path="/favourites" element={<Favourites />} />
       </Routes>
     </>
   );
